@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model CardImage {
+  id        Int    @id
+  image_url String
+  image_url_small String?
+  cardId    Int
+  card      Card   @relation(fields: [cardId], references: [id])
+}
+
+model CardBanlistInfo {
+  id       Int    @id
+  ban_tcg  String
+  ban_ocg  String?
+  cardId   Int @unique
+  card     Card   @relation(fields: [cardId], references: [id])
+}
+
+model Card {
+  id          Int      @id
+  name        String
+  type        String
+  desc        String
+  atk         Int?
+  def         Int?
+  level       Int?
+  race        String?
+  attribute   String?
+  archetype   String?
+  card_images CardImage[]
+  banlist_info CardBanlistInfo?
+}
