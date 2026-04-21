@@ -12,14 +12,9 @@ datasource db {
   provider = "sqlite"
 }
 
-model Card {
-  id          Int      @id @default(autoincrement())
-  decks Deck[]
-}
-
 model Deck {
   id          Int      @id @default(autoincrement())
   name        String
   description String?
-  cards       Card[]
+  cards       String  @default("[]") 
 }
